@@ -4,7 +4,7 @@ package com.megliosolutions.fragmentexample;
  * Created by Meglio on 7/13/16.
  */
 public class Movie {
-    private String title, genre, year;
+    public String title, genre, year;
 
     public Movie() {
     }

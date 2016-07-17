@@ -4,14 +4,17 @@ import android.app.Activity;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -19,8 +22,10 @@ import java.util.List;
  * Created by Meglio on 7/13/16.
  */
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
-    public MainActivity mainActivity;
+
+    private MainActivity activity;
     private Context mContext;
+    public Bundle bundle = new Bundle();
 
     private List<Movie> moviesList;
 
@@ -48,6 +53,24 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
         @Override
         public void onClick(View v) {
             //Show movie info in new fragment
+            String mTitle = title.getText().toString();
+            String mGenre = genre.getText().toString();
+            String mYear = year.getText().toString();
+            String movieStr = mTitle +
+                    "\n " +  mGenre +
+                    "\n " +  mYear;
+            Toast.makeText(mContext,movieStr, Toast.LENGTH_SHORT).show();
+            MovieInfo movie = new MovieInfo();
+            bundle.putString("title",mTitle);
+            bundle.putString("genre",mGenre);
+            bundle.putString("year",mYear);
+            movie.setArguments(bundle);
+
+            FragmentManager fragmentManager = activity.getFragmentManager();
+            //Replace intent with Bundle and put it in the transaction
+            FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+            fragmentTransaction.replace(R.id.main_frameLayout, movie);
+            fragmentTransaction.commit();
         }
     }
 
@@ -69,6 +92,11 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
     @Override
     public int getItemCount() {
+        return moviesList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
         return moviesList.size();
     }
 }
