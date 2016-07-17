@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:padding="5dp"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="MOVIE TITLE"
+        android:id="@+id/movie_info_title"
+        android:layout_alignParentTop="true"
+        android:gravity="center"
+        android:padding="20dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="GENRE"
+        android:id="@+id/movie_info_genre"
+        android:textColor="@android:color/black"
+        android:padding="8dp"
+        android:gravity="center"
+        android:layout_below="@+id/movie_info_title"
+        android:layout_alignLeft="@+id/movie_info_title"
+        android:layout_alignStart="@+id/movie_info_title"
+        android:layout_marginTop="57dp" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        android:text="YEAR"
+        android:id="@+id/movie_info_year"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"
+        android:gravity="center"
+        android:padding="10dp"
+        android:textColor="@android:color/black" />
+
+</RelativeLayout>
