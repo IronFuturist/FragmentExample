@@ -22,15 +22,6 @@
             android:id="@+id/nav_item3"
             android:title="@string/nav_settings"/>
     </group>
-    <group
-        android:checkableBehavior="single"
-        android:id="@+id/nav_group_logout">
-
-        <item
-            android:id="@+id/nav_item4"
-            android:title="@string/nav_logout"/>
-    </group>
-
 
 
 </menu>
