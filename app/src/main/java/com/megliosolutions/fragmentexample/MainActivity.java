@@ -19,7 +19,7 @@ import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     public static final String FRAG_TAG = "FRAG_TAG";
-    public FragmentManager fragmentManager;
+    public FragmentManager fragmentManager = getFragmentManager();
     public Toolbar toolbar;
     public DrawerLayout mDrawerLayout;
     public NavigationView mNavView;

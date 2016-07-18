@@ -1,9 +1,11 @@
 package com.megliosolutions.fragmentexample;
 
 import android.app.Activity;
+import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -23,16 +25,36 @@ import java.util.List;
  */
 public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHolder> {
 
-    private MainActivity activity;
+    private static final String TAG = MoviesAdapter.class.getSimpleName();
     private Context mContext;
-    public Bundle bundle = new Bundle();
-
     private List<Movie> moviesList;
-
+    public MainActivity activity;
+    public FragmentManager fragmentManager;
+    public Movie mInfo;
+    public String mTitleStr, mGenreStr, mYearStr;
 
     public MoviesAdapter(Context context, List<Movie> moviesList) {
         this.mContext = context;
         this.moviesList = moviesList;
+    }
+
+    @Override
+    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View itemView = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.movie_list_row, parent, false);
+
+        return new MyViewHolder(itemView);
+    }
+
+
+    @Override
+    public int getItemCount() {
+        return moviesList.size();
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
     }
 
     public class MyViewHolder extends RecyclerView.ViewHolder
@@ -52,51 +74,34 @@ public class MoviesAdapter extends RecyclerView.Adapter<MoviesAdapter.MyViewHold
 
         @Override
         public void onClick(View v) {
-            //Show movie info in new fragment
-            String mTitle = title.getText().toString();
-            String mGenre = genre.getText().toString();
-            String mYear = year.getText().toString();
-            String movieStr = mTitle +
-                    "\n " +  mGenre +
-                    "\n " +  mYear;
-            Toast.makeText(mContext,movieStr, Toast.LENGTH_SHORT).show();
             MovieInfo movie = new MovieInfo();
-            bundle.putString("title",mTitle);
-            bundle.putString("genre",mGenre);
-            bundle.putString("year",mYear);
+            AppCompatActivity activity = (AppCompatActivity) v.getContext();
+            fragmentManager = activity.getFragmentManager();
+            Bundle bundle = new Bundle();
+            bundle.putString("title",title.getText().toString());
+            bundle.putString("genre",genre.getText().toString());
+            bundle.putString("year",year.getText().toString());
             movie.setArguments(bundle);
-
-            FragmentManager fragmentManager = activity.getFragmentManager();
             //Replace intent with Bundle and put it in the transaction
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.main_frameLayout, movie);
+            fragmentTransaction.addToBackStack(null);
             fragmentTransaction.commit();
         }
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.movie_list_row, parent, false);
-
-        return new MyViewHolder(itemView);
-    }
-
-    @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(final MyViewHolder holder, int position) {
         Movie movie = moviesList.get(position);
         holder.title.setText(movie.getTitle());
         holder.genre.setText(movie.getGenre());
         holder.year.setText(movie.getYear());
+
     }
 
-    @Override
-    public int getItemCount() {
-        return moviesList.size();
-    }
 
     @Override
-    public long getItemId(int position) {
-        return moviesList.size();
+    public void onAttachedToRecyclerView(RecyclerView recyclerView) {
+        super.onAttachedToRecyclerView(recyclerView);
     }
 }

@@ -21,12 +21,12 @@ import java.util.List;
 /**
  * Created by Meglio on 7/12/16.
  */
-public class FragmentExample extends Fragment {
+public class FragmentExample extends Fragment{
 
     private List<Movie> movieList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MoviesAdapter mAdapter;
-    public Context mContext = getActivity();
+    public Movie mInfo;
 
 
     @Nullable
@@ -42,23 +42,6 @@ public class FragmentExample extends Fragment {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
         prepareMovieData();
-
-        recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-            @Override
-            public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-                return false;
-            }
-
-            @Override
-            public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
-            }
-
-            @Override
-            public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-            }
-        });
 
         return view;
     }
